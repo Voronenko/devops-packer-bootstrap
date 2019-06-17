@@ -1,0 +1,29 @@
+{
+    "builders": [
+        {
+            "type": "docker",
+            "image": "docker.io/softasap/ubuntu:16.04.python27.latest",
+            "commit": true,
+            "changes": [
+#                "WORKDIR /project",
+#                "ENTRYPOINT [\"/opt/bin/entry_point.sh\"]"
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "user": "seluser",
+            "playbook_file": "layer_project/provision.yml"
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "type": "docker-tag",
+                "repository": "docker.io/voronenko/someproject",
+                "tag": "latest"
+            }
+        ]
+    ]
+}
